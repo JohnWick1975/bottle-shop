@@ -6,6 +6,18 @@ use Core\DataHolder;
 
 class User extends DataHolder
 {
+    const ROLE_ADMIN = 1;
+    const ROLE_USER = 0;
+
+    public function setRole(int $role): void
+    {
+        $this->role = $role;
+    }
+
+    public function getRole(): ?string
+    {
+        return $this->role ?? null;
+    }
 
     public function setUsername(string $username): void
     {
@@ -35,6 +47,16 @@ class User extends DataHolder
     public function getPassword(): ?string
     {
         return $this->password ?? null;
+    }
+
+    protected function setId(int $id)
+    {
+        $this->id = $id;
+    }
+
+    protected function getId()
+    {
+        return $this->id ?? null;
     }
 
 }

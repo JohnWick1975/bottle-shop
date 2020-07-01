@@ -3,11 +3,9 @@
 define('ROOT', __DIR__);
 define('DB_FILE', ROOT . '/app/data/db.json');
 
-session_start();
-
 // Core Functions
 require_once ROOT . '/core/functions/html.php';
-require_once ROOT . '/core/functions/form.php';
+require_once ROOT . '/core/functions/validators.php';
 
 //App functions
 require_once ROOT . '/app/functions/validators.php';

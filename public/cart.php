@@ -2,34 +2,33 @@
 
 require_once '../bootloader.php';
 
+use App\Views\Forms\Carts\CartData;
 use App\Views\Navigation;
-use App\Views\Forms\Carts\CatalogData;
 use App\Cart\Items\Item;
-use App\Views\Forms\Carts\AddItem;
-use App\App;
 use App\Cart\Items\Model;
+use App\Views\Forms\DeleteForm;
 use App\Views\Forms\Hero;
 
-function add_success(&$form, $input)
-{
-    $item = new Item([
-        'drink_id' => $input['id'],
-        'user_id' => App::$session->getUser()->id
-    ]);
-
-    Model::insert($item);
+if (!App\App::$session->getUser()) {
+    header('Location: /login.php');
 }
 
-$add_item = new AddItem();
+function delete_success(&$form, $input)
+{
+    $item = new Item($input);
+    Model::delete($item);
+}
 
-$add_item->validate();
+$delete_form = new DeleteForm();
 
-$catalogView = new CatalogData();
-$catalog_html = $catalogView->render();
+$delete_form->validate();
+
 $navigationView = new Navigation();
 $navigation_html = $navigationView->render();
-$heroView = new Hero();
-$hero_html = $heroView->render();
+$heroViev = new Hero();
+$hero_html = $heroViev->render();
+$cartView = new CartData();
+$cart_html = $cartView->render();
 ?>
 <html lang="en">
 	<head>
@@ -44,8 +43,8 @@ $hero_html = $heroView->render();
         <?php print $navigation_html; ?>
         <?php print $hero_html; ?>
 		<main>
-			<div class="wrapper-catalog animate__animated animate__slideInRight">
-                <?php print $catalog_html; ?>
+			<div class="wrapper animate__animated animate__slideInRight">
+                <?php print $cart_html; ?>
 			</div>
 		</main>
 	</body>

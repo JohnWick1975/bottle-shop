@@ -4,86 +4,23 @@ require_once '../bootloader.php';
 
 use App\App;
 use App\Users\User;
-use Core\Views\Form;
+use App\Views\Forms\Auth\Register;
 use App\Views\Navigation;
+use App\Users\Model;
+use App\Views\Forms\Hero;
+
 
 if (App::$session->getUser()) {
     header('Location: /index.php');
 }
 
-$form = [
-    'attr' => [
-        'method' => 'POST'
-    ],
-    'title' => 'Register',
-    'fields' => [
-        'email' => [
-            'type' => 'text',
-            'label' => 'Email:',
-            'validators' => [
-                'validate_field_not_empty'
-            ],
-            'extra' => [
-                'attr' => [
-                    'placeholder' => 'user@email.com',
-                ]
-            ]
-        ],
-        'password' => [
-            'type' => 'password',
-            'label' => 'Password:',
-            'validators' => [
-                'validate_field_not_empty'
-            ],
-            'extra' => [
-                'attr' => [
-                    'placeholder' => 'Password'
-                ]
-            ],
-        ],
-        'password_repeat' => [
-            'type' => 'password',
-            'label' => 'Password repeat:',
-            'validators' => [
-                'validate_field_not_empty'
-            ],
-            'extra' => [
-                'attr' => [
-                    'placeholder' => 'Password'
-                ]
-            ],
-        ]
-    ],
-    'validators' => [
-        'validate_fields_match' => [
-            'password',
-            'password_repeat'
-        ],
-        'validate_field_unique' => [
-            'field' => 'email'
-        ]
-    ],
-    'buttons' => [
-        'submit' => [
-            'title' => 'Register'
-        ]
-    ],
-    'callbacks' => [
-        'success' => 'form_success',
-        'fail' => 'form_fail'
-    ]
-];
-
 function form_success(&$form, $input)
 {
     $input['password'] = password_hash($input['password'], PASSWORD_BCRYPT);
     $user = new User($input);
+    $user->role = User::ROLE_USER;
 
-    $table_name = 'users';
-
-    App::$db->createTable($table_name);
-    App::$db->insertRow($table_name, $user->_getData());
-
+    Model::insert($user);
 
     header('Location: login.php');
 }
@@ -94,29 +31,29 @@ function form_fail(&$form, $input)
     $form['message'] = 'Failed to Register';
 }
 
-$registerView = new Form($form);
-$navigationView = new Navigation();
+$registerView = new Register();
 
-$form_values = sanitize_form_values($registerView->getData());
-
-if ($form_values) {
-    $result = validate_form($registerView->getData(), $form_values);
-}
+$registerView->validate();
 
 $register_html = $registerView->render();
+$navigationView = new Navigation();
 $navigation_html = $navigationView->render();
+$heroView = new Hero();
+$hero_html = $heroView->render();
 ?>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Register</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css">
 		<link rel="stylesheet" href="assets/css/style.css">
 	</head>
 	<body>
         <?php print $navigation_html; ?>
-		<main>
-			<div class="wrapper">
+        <?php print $hero_html; ?>
+		<main class="main-register">
+			<div class="wrapper animate__animated animate__slideInRight">
                 <?php print $register_html; ?>
 			</div>
 		</main>

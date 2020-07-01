@@ -1,18 +1,17 @@
 <header>
-	<div class="wrapper">
+    <div class="wrapper">
         <nav>
-            <ul>
-                <li><a href="/index.php">Home</a></li>
-            </ul>
-            <ul>
-                <?php if (App\App::$session->getUser()): ?>
-                    <li><a href="/add.php">Add</a></li>
-                    <li><a href="/logout.php">Logout</a></li>
-                <?php else: ?>
-                    <li><a href="/login.php">Login</a></li>
-                    <li><a href="/register.php">Register</a></li>
-                <?php endif; ?>
-            </ul>
+            <?php foreach ($data as $section_id => $section): ?>
+                <ul class="<?php print $section_id; ?>">
+                    <?php foreach ($section as $nav_id => $link): ?>
+                        <div class="link-wrapper <?php print ($link['active'] ?? false) ? 'active' : ''; ?>">
+                            <a href="<?php print $link['url']; ?>">
+                                <?php print $link['title']; ?>
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endforeach; ?>
         </nav>
-	</div>
+    </div>
 </header>

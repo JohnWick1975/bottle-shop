@@ -6,6 +6,7 @@ namespace Core;
 
 use App\App;
 use App\Users\User;
+use App\Users\Model;
 
 class Session
 {
@@ -16,6 +17,7 @@ class Session
 
     public function __construct()
     {
+        session_start();
         $this->loginFromCookie();
     }
 
@@ -26,10 +28,10 @@ class Session
 
     public function login(string $email, string $password): bool
     {
-        $user = App::$db->getRowWhere('users', ['email' => $email, 'password' => $password]);
+        $user_data = Model::getWhere(['email' => $email, 'password' => $password]);
 
-        if ($user){
-            $user = new User($user);
+        if ($user_data) {
+            $user = $user_data[0];
             $_SESSION['email'] = $user->email;
             $_SESSION['password'] = $user->password;
             $this->user = $user;
@@ -45,7 +47,7 @@ class Session
         return $this->user;
     }
 
-    public function logout( string $redirect = null)
+    public function logout(string $redirect = null)
     {
         $_SESSION = [];
 
