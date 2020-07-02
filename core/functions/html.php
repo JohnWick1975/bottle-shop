@@ -82,37 +82,4 @@ function option_attr(string $option_id, array $field): string
     return html_attr($attrs);
 }
 
-/**
- * Generate attributes for a pixel.
- * @param array $pixel
- * @return string
- */
-function pixel_attr(array $pixel): string {
-    $attrs = [];
-    $attrs['class'] = 'pixel';
-    $attrs['style'] = pixel_style_attr($pixel);
 
-    return html_attr($attrs);
-}
-
-/**
- * Generate an inline style string.
- * @param array $pixel
- * @return string
- */
-function pixel_style_attr(array $pixel): string
-{
-    $properties = [
-        'top' => $pixel['y'] . 'px',
-        'left' => $pixel['x'] . 'px',
-        'background-color' => $pixel['color']
-    ];
-
-    $style = [];
-
-    foreach ($properties as $key => $value) {
-        $style[] = "$key: $value";
-    }
-
-    return implode(';', $style);
-}

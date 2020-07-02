@@ -1,33 +1,17 @@
-console.log('veikia');
-const pixels = document.querySelectorAll('.pixel');
-const notification = document.createElement('div');
-const p1 = document.createElement('p');
-const p2 = document.createElement('p');
-const p3 = document.createElement('p');
+import {createProductCard} from "./createCard.js";
+import {createNode} from "./createNode.js";
 
-pixels.forEach((pixel) => {
-    pixel.addEventListener('mouseover', () => {
+const main = document.querySelector('main');
 
-        notification.classList.add('pixel-notification', 'animate__animated', 'animate__flipInY');
+fetch('/api/get.php')
+    .then(response => response.json())
+    .then(data => createProductContainer(data));
 
-        notification.style.backgroundColor = pixel.style.backgroundColor;
+function createProductContainer(data) {
+    const container = createNode('div', {class: 'wrapper-catalog'});
 
-        p1.innerHTML = "Top coordinates are " + pixel.style.top;
-        notification.append(p1);
-
-        p2.innerHTML = "Left coordinates are " + pixel.style.left;
-        notification.append(p2);
-
-        p3.innerHTML = "color " + pixel.style.backgroundColor;
-        notification.append(p3);
-
-        pixel.append(notification);
+    main.append(container);
+    data.forEach(drink => {
+        container.append(createProductCard(drink));
     });
-});
-
-pixels.forEach((pixel) => {
-    pixel.addEventListener('mouseleave', () => {
-        pixel.innerHTML = '';
-    });
-});
-
+}
