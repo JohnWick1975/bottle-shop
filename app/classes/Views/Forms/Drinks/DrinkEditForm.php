@@ -10,5 +10,6 @@ public function __construct($data = [])
 {
     parent::__construct($data);
     $this->data['buttons']['submit']['title'] = 'Edit';
+    $this->data['fields']['id']['type'] = 'hidden';
 }
 }

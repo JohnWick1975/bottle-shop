@@ -6,7 +6,7 @@ export function deleteDrink(id, parent) {
         method: 'POST',
         body: form
     })
-        .then(response => response.text())
+        .then(response => response.json())
         .then(data => {
                 if (data) {
                     parent.closest('.card').remove();

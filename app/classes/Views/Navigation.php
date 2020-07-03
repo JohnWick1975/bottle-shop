@@ -17,7 +17,7 @@ class Navigation extends \Core\View
         $user = App::$session->getUser();
         if ($user) {
             $this->addLink('left', '/cart.php', 'Your Cart');
-            $this->addLink('right', '/logout.php', "Logout($user->email)");
+            $this->addLink('right', '/logout.php', "Logout ($user->email)");
             $user->role === User::ROLE_ADMIN ? $this->addAdminLinks() : null;
         } else {
             $this->addLink('right', '/login.php', 'Login');
@@ -40,6 +40,7 @@ class Navigation extends \Core\View
     {
         $this->addLink('left', '/admin/products/create.php', 'Add Bottle');
         $this->addLink('left', '/admin/products/view.php', 'Manage Bottles');
+        $this->addLink('left', '/admin/products/admin.php', 'JS Admin');
     }
 
     public function render(string $template_path = ROOT . '/app/templates/navigation.tpl.php')

@@ -81,5 +81,3 @@ function option_attr(string $option_id, array $field): string
 
     return html_attr($attrs);
 }
-
-

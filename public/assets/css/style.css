@@ -126,6 +126,14 @@ form button {
     transition: 0.2s linear;
 }
 
+form.js-edit-form {
+    position: absolute;
+    z-index: 100;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .login button:hover, .register button:hover, .create-edit button:hover {
     cursor: pointer;
     box-shadow: 200px 0 0 0 rgba(0, 0, 0, 0.3) inset;
@@ -154,18 +162,33 @@ form button {
     transition: transform 0.15s ease-in-out;
 }
 
+button.new-bottle {
+    margin: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: #9c9bc7;
+    transition: .2s linear;
+}
+
+button.new-bottle:hover {
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 0 0 2px white, 0 0 0 4px #9c9bc7;
+}
+
 .delete-form > button:hover {
     background: #f5ffff;
     transform: scale(1.5);
 }
 
-.add-item-form button {
+.add-item-form button, .js-edit-form button {
     background-color: #9c9bc7;
     border-radius: 10px;
     transition: 0.2s linear;
 }
 
-.add-item-form button:hover {
+.add-item-form button:hover, .js-edit-form button:hover {
     color: #fff;
     box-shadow: 0 0 0 2px #9c9bc7 inset, 0 0 0 4px white inset;
     cursor: pointer;

@@ -1,9 +1,10 @@
 <?php
+
 require_once '../../bootloader.php';
 
-use App\Views\Forms\DeleteForm;
 use App\Drinks\Drink;
 use App\Drinks\Model;
+use App\Views\Forms\Drinks\DrinkEditForm;
 use App\App;
 use App\Users\User;
 
@@ -12,11 +13,13 @@ if (!App::$session->getUser() || App::$session->getUser()->role === User::ROLE_U
     exit();
 }
 
-function delete_success(&$form, $input)
+function form_success(&$form, $input)
 {
-  $drink = new Drink($input);
-  print json_encode(Model::delete($drink));
+    $drink = new Drink($input);
+    Model::update($drink);
+    print json_encode($drink);
 }
 
-$delete = new DeleteForm();
-$delete->validate();
+
+$update = new DrinkEditForm();
+$update->validate();

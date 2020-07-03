@@ -1,5 +1,6 @@
 import {createNode} from "./createNode.js";
 import {deleteDrink} from "./deleteDrink.js";
+import {createEditForm} from "./createEditForm.js";
 
 
 export function createProductCard(value) {
@@ -21,12 +22,11 @@ export function createProductCard(value) {
     const pButton = createNode('p', {});
 
 
-    const butEdit = createNode('button', {class: 'edit'}, 'Edit');
+    const butEdit = createNode('button', {class: 'edit', click: () => createEditForm(value, card)}, 'Edit');
 
 
     const butDelete = createNode('button', {class: 'delete', click: () => deleteDrink(value.id, card)}, 'Delete');
 
-    /* butDelete.addEventListener('click', () => deleteDrink(value.id, card));*/
 
     pButton.append(butEdit, butDelete);
 

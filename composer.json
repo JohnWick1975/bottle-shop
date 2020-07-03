@@ -1,5 +1,5 @@
 {
-  "name": "PixelWall",
+  "name": "Bottle-shop",
   "autoload": {
     "psr-4": {
       "App\\": "app/classes",

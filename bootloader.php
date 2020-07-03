@@ -7,9 +7,6 @@ define('DB_FILE', ROOT . '/app/data/db.json');
 require_once ROOT . '/core/functions/html.php';
 require_once ROOT . '/core/functions/validators.php';
 
-//App functions
-require_once ROOT . '/app/functions/validators.php';
-
 //Autoload all classes
 require_once ROOT . '/vendor/autoload.php';
 
